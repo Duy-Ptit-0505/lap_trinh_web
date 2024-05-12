@@ -1,0 +1,195 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Modernize Free</title>
+    <link rel="shortcut icon" type="image/png" href="/admin/images/admin/logos/favicon.png" />
+    <link rel="stylesheet" href="/admin/css/styles.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+<!--  Body Wrapper -->
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <div th:replace="~{/common/admin/menu-left :: menu-left}"></div>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{/common/admin/header :: header}"></div>
+        <!--  Header End -->
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-lg-12 d-flex align-items-stretch">
+                    <div class="card w-100">
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-semibold mb-4">Most Recent Order</h5>
+                            <div class="table-responsive">
+                                <table class="table text-nowrap mb-0 align-middle">
+                                    <thead class="text-dark fs-4">
+                                    <tr>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Image</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Customer</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Building</h6>
+                                        </th>
+<!--                                        <th class="border-bottom-0">-->
+<!--                                            <h6 class="fw-semibold mb-0">Viewing day</h6>-->
+<!--                                        </th>-->
+<!--                                        <th class="border-bottom-0">-->
+<!--                                            <h6 class="fw-semibold mb-0">Time order</h6>-->
+<!--                                        </th>-->
+<!--                                        <th class="border-bottom-0">-->
+<!--                                            <h6 class="fw-semibold mb-0">Phone</h6>-->
+<!--                                        </th>-->
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Action</h6>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each = "item : ${transactionDTOList}">
+                                        <td class="border-bottom-0">
+                                            <img th:src="'data:image/png;base64,'+ ${item.imageBase64}"  alt="Image" class="img-fluid" style="width: 110px; height: 60px;">
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <h6 th:text="${item.customer}" class="btn btn-outline-link m-1">Sunil Joshi</h6>
+                                            <!--                                            <span class="fw-normal">Web Designer</span>-->
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <h6 th:text="${item.building}" class="btn btn-outline-link m-1">Sunil Joshi</h6>
+                                            <!--                                            <span class="fw-normal">Web Designer</span>-->
+                                        </td>
+<!--                                        <td class="border-bottom-0">-->
+<!--                                            <span th:text="${item.orderDay}" class="badge bg-secondary rounded-3 fw-semibold">Low</span>-->
+
+<!--                                        </td>-->
+<!--                                        <td class="border-bottom-0">-->
+<!--                                            <div class="d-flex align-items-center gap-2">-->
+<!--                                                <span th:text="${item.timeOrder}" class="badge bg-warning rounded-3 fw-semibold">Low</span>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                        <td class="border-bottom-0">-->
+<!--                                            <div class="d-flex align-items-center gap-2">-->
+<!--                                                <span th:text="${item.phone}" class="badge bg-warning rounded-3 fw-semibold">Low</span>-->
+<!--                                            </div>-->
+<!--                                            &lt;!&ndash;                                            <div class="row items-center">&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                <div class="col">&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                    <div class="sidebar-item">&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                        <button type="button" class="btn btn-outline-success m-1" data-bs-toggle="modal" data-bs-target="#alertingModal">Buy !!!</button>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                        <button type="button" class="btn btn-outline-danger m-1">Delete&ndash;&gt;-->
+
+<!--                                            &lt;!&ndash;                                                        </button>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                    </div>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                                </div>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                            </div>&ndash;&gt;-->
+<!--                                        </td>-->
+                                        <td class="border-bottom-0">
+                                            <div class="row items-center">
+                                                <div class="col">
+                                                    <div class="sidebar-item">
+
+                                                        <button type="button" class="btn btn-outline-success m-1" th:attr="onclick=|showTransaction('${item.id}')|">View detail</button>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <div th:id="'showImageContractModal' + ${item.id}" class="modal fade" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="showModalLabel">Contract details</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div>
+
+                                                            <div class="mb-3">
+
+                                                                <img th:src="'data:image/png;base64,'+ ${item.imageContractBase64}"  alt="Image" class="img-fluid" style="width: 470px; height: 410px;">
+                                                            </div>
+                                                            <!--                                    <div class="mb-3 form-check">-->
+                                                            <!--                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+                                                            <!--                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+                                                            <!--                                    </div>-->
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Đóng</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="alertingModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Alerts</h5>
+            <div class="card mb-0">
+                <div class="card-body p-4">
+                    <h4 class="modal-title">Warning</h4>
+                    <div class="alert alert-primary" role="alert">
+                        <p class="btn btn-outline-link m-1">
+                            We're sorry that online payments are currently not possible.
+                        </p>
+                        <p class="btn btn-outline-link m-1">
+                            We thank you for your interest in our products.
+                        </p>
+                        <p class="btn btn-outline-link m-1">
+                            To buy this property, please come to Floor 4, ABC Building, XYZ Street, JQK Ward, Hanoi so we can advise you on the procedure to buy this product.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="/admin/libs/jquery/dist/jquery.min.js"></script>
+<script src="/admin/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/admin/js/sidebarmenu.js"></script>
+<script src="/admin/js/app.min.js"></script>
+<script src="/admin/libs/apexcharts/dist/apexcharts.min.js"></script>
+<script src="/admin/libs/simplebar/dist/simplebar.js"></script>
+<script src="/admin/js/dashboard.js"></script>
+<script>
+    function showTransaction(id){
+        const k = 'showImageContractModal' + id;
+        const modal = new bootstrap.Modal('#' + k);
+        modal.show();
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,391 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Modernize Free</title>
+    <link rel="shortcut icon" type="image/png" href="/admin/images/admin/logos/favicon.png" />
+    <link rel="stylesheet" href="/admin/css/styles.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+<!--  Body Wrapper -->
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <div th:replace="~{/common/admin/menu-left :: menu-left}"></div>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="~{/common/admin/header :: header}"></div>
+        <!--  Header End -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 d-flex align-items-stretch">
+                    <div class="card w-100">
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-semibold mb-4">Building List</h5>
+                                <button th:attr="onclick=|add()|" class="btn badge bg-success rounded-3 fw-semibold">
+                                    <i class="fa-solid fa-circle-plus"></i>Add
+                                </button>
+                            <div class="table-responsive">
+                                <table class="table text-nowrap mb-0 align-middle">
+                                    <thead class="text-dark fs-4">
+                                    <tr>
+                                        <th class="border-bottom-0">
+
+                                            <h6 class="fw-semibold mb-0">Image</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
+
+                                            <h6 class="fw-semibold mb-0">Building</h6>
+
+                                        </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Categories</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Address</h6>
+                                        </th>
+                                        <th class="border-bottom-0">
+                                            <h6 class="fw-semibold mb-0">Action</h6>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each = "item : ${buildingDTOList}">
+                                        <td class="border-bottom-0">
+                                            <img th:src="'data:image/png;base64,'+ ${item.imageBase64}"  alt="Image" class="img-fluid" style="width: 110px; height: 60px;">
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <button type="button" class="btn m-1" th:attr="onclick=|show('${item.id}')|">
+                                                <h6 th:text="${item.buildingName}" class="m-1">Sunil Joshi</h6>
+                                            </button>
+                                            <!--                                            <span class="fw-normal">Web Designer</span>-->
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <span th:text="${item.category}" class="badge bg-secondary rounded-3 fw-semibold">Low</span>
+
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span th:text="${item.address}" class="badge bg-warning rounded-3 fw-semibold">Low</span>
+                                            </div>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <div class="row items-center">
+                                                <div class="col">
+                                                    <div class="sidebar-item">
+                                                        <button type="button" class="btn btn-outline-success m-1" th:attr="onclick=|showForUpdate('${item.id}')|">Update</button>
+                                                        <!--                                                        <a th:href="@{'/admin/update/' + ${item.id}}">-->
+                                                        <!--                                                            <button type="button" class="btn btn-outline-success m-1" data-bs-toggle="modal" data-bs-target="#updateModal">Cập nhật</button>-->
+                                                        <!--                                                        </a>-->
+
+                                                        <a th:href="@{'/admin/delete/' + ${item.id}}">
+                                                            <button type="button" class="btn btn-outline-danger m-1" data-bs-toggle="modal" data-bs-target="#alertingModal">Delete</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <div th:id="'showModal' + ${item.id}" class="modal fade" tabindex="-1" aria-labelledby="showModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="showModalLabel">Cập nhật thông tin</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!--                                                        <form th:action="@{/admin/update}" method="post">-->
+                                                        <!--                                                            <input type="hidden"  th:value="${item.buildingName}" />-->
+                                                        <!--                                                            <div class="mb-3">-->
+                                                        <!--                                                                <label for="name" class="form-label">Tên</label>-->
+                                                        <!--                                                                <input type="text" class="form-control" id="name" th:value="${item.buildingName}" required>-->
+                                                        <!--                                                            </div>-->
+                                                        <!--                                                            <div class="mb-3">-->
+                                                        <!--                                                                <label for="address" class="form-label">Địa chỉ</label>-->
+                                                        <!--                                                                <input type="text" class="form-control" id="address" th:value="${item.address}" required>-->
+                                                        <!--                                                            </div>-->
+                                                        <!--                                                            <button type="submit" class="btn btn-primary">Cập nhật</button>-->
+                                                        <!--                                                        </form>-->
+                                                        <div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Building-Name</label>
+                                                                <input   type="text" class="form-control" th:name = "buildingName"  th:value="${item.buildingName}" readonly="true">
+                                                                <!--                                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Address</label>
+                                                                <input  type="text" class="form-control" th:name = "address" th:value="${item.address}" readonly = "true">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Area</label>
+                                                                <input   type="text" class="form-control" th:name = "area" th:value="${item.area}" readonly = "true">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Bed-Room</label>
+                                                                <input   type="text" class="form-control" th:name = "bedRoom" th:value="${item.bedRoom}" readonly = "true">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Bath-Room</label>
+                                                                <input  type="text" class="form-control" th:name = "bathRoom" th:value="${item.bathRoom}" readonly = "true">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Price</label>
+                                                                <input  type="text" class="form-control" th:name = "price" th:value="${item.price}" readonly = "true">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Offer-Type</label>
+                                                                <input   class="form-control" th:name = "offerType" th:value="${item.offerType}" readonly = "true">
+
+
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Category</label>
+                                                                <input    class="form-control" th:name = "category" th:value="${item.category}" readonly = "true">
+
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Short-Description</label>
+                                                                <input  type="text" class="form-control" th:name = "shortDescription" th:value="${item.shortDescription}" readonly = "true">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Description</label>
+                                                                <input   type="text" class="form-control" th:name = "description"  th:value="${item.description}" readonly = "true">
+                                                            </div>
+                                                            <!--                                    <div class="mb-3 form-check">-->
+                                                            <!--                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+                                                            <!--                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+                                                            <!--                                    </div>-->
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Đóng</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div th:id="'updateModal' + ${item.id}" class="modal fade" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="updateModalLabel">Cập nhật thông tin</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        <form id="formAdd" th:object="${modelAdd}"  th:action="@{/admin/update-building}" method="POST" enctype="multipart/form-data">
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Building-Name</label>
+                                                                <input id="view"  type="hidden" class="form-control" th:name = "view"  th:value="${item.view}">
+                                                                <input id="id"  type="hidden" class="form-control" th:name = "id" th:value="${item.id}">
+                                                                <input id="buildingName"  type="text" class="form-control" th:name = "buildingName"  th:value="${item.buildingName}" required>
+                                                                <!--                                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Address</label>
+                                                                <input id="address" type="text" class="form-control" th:name = "address" th:value="${item.address}" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Area</label>
+                                                                <input id="area"  type="text" class="flt form-control" th:name = "area" th:value="${item.area}" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Bed-Room</label>
+                                                                <input id="bedRoom"  type="number" class="int form-control" th:name = "bedRoom" th:value="${item.bedRoom}" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Bath-Room</label>
+                                                                <input id="bathRoom" type="number" class="int form-control" th:name = "bathRoom" th:value="${item.bathRoom}" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Price</label>
+                                                                <input id="price"  type="text" class="flt form-control" th:name = "price" th:value="${item.price}" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Offer-Type</label>
+                                                                <select id="offerType"  class="form-select" th:name = "offerType" th:value="${item.offerType}">
+                                                                    <option value="sale" class="form-control">Sale</option>
+                                                                    <option value="rent" class="form-control">Rent</option>
+                                                                    <option value="lease" class="form-control">Lease</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Category</label>
+                                                                <select id="category"   class="form-select" th:name = "category" th:value="${item.category}">
+
+                                                                    <option value="CON_DO" class="form-control">Condo</option>
+                                                                    <option value="COMMERCIAL_BUILDING" class="form-control">Commercial Building</option>
+                                                                    <option value="LAND_PROPERTY" class="form-control">Land Property</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Short-Description</label>
+                                                                <input id="shortDescription"  type="text" class="form-control" th:name = "shortDescription" th:value="${item.shortDescription}" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label  class="form-label">Description</label>
+                                                                <input id="description"  type="text" class="form-control" th:name = "description"  th:value="${item.description}" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label   class="form-label">Image</label>
+
+                                                                <input class="form-control" name="image" type="file" id="uploadImage"  th:value="${item.image}" required>
+                                                            </div>
+                                                            <!--                                    <div class="mb-3 form-check">-->
+                                                            <!--                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+                                                            <!--                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+                                                            <!--                                    </div>-->
+
+                                                            <div class="modal-footer">
+                                                                <button type="submit" id="btnsubmit" class="btn btn-primary">Submit</button>
+                                                                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Đóng</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:id="addModal" class="modal fade" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Cập nhật thông tin</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form th:object="${modelAddBuilding}" th:action="@{/admin/add-building}" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label  class="form-label">Building-Name</label>
+                        <input th:field="*{id}" type="hidden" id="idBuilding" name="idBuilding" value="${modelAdd.id}" >
+                        <input  type="text" class="form-control" th:field="*{buildingName}" required>
+                        <!--                                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Address</label>
+                        <input  type="text" class="form-control" th:field="*{address}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Area</label>
+                        <input id="areaAdd"  type="text" class="flt form-control" th:field="*{area}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Bed-Room</label>
+                        <input  type="number" class="int form-control" th:field="*{bedRoom}"  required>
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Bath-Room</label>
+                        <input  type="number" class="int form-control" th:field="*{bathRoom}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Price</label>
+                        <input id="priceAdd"  th:field="*{price}" type="text" class="flt form-control"  required>
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Offer-Type</label>
+                        <select   class="form-select" th:field="*{offerType}">
+                            <option value="sale" class="form-control">Sale</option>
+                            <option value="rent" class="form-control">Rent</option>
+                            <option value="lease" class="form-control">Lease</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Category</label>
+                        <select    class="form-select" th:field="*{category}">
+                            <option value="CON_DO" class="form-control">Condo</option>
+                            <option value="COMMERCIAL_BUILDING" class="form-control">Commercial Building</option>
+                            <option value="LAND_PROPERTY" class="form-control">Land Property</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Short-Description</label>
+                        <input  type="text" class="form-control" th:field="*{shortDescription}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label  class="form-label">Description</label>
+                        <input   type="text" class="form-control" th:field="*{description}"  required>
+                    </div>
+                    <div class="mb-3">
+                        <label   class="form-label">Image</label>
+
+                        <input class="form-control" name="image" type="file"  value="${modelEdit.imageName}" th:field="*{image}" required>
+                    </div>
+                    <!--                                    <div class="mb-3 form-check">-->
+                    <!--                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+                    <!--                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+                    <!--                                    </div>-->
+                    <button type="submit"  class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="/admin/libs/jquery/dist/jquery.min.js"></script>
+<script src="/admin/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/admin/js/sidebarmenu.js"></script>
+<script src="/admin/js/app.min.js"></script>
+<script src="/admin/libs/apexcharts/dist/apexcharts.min.js"></script>
+<script src="/admin/libs/simplebar/dist/simplebar.js"></script>
+<script src="/admin/js/dashboard.js"></script>
+<script>
+    function showForUpdate(id){
+        const k = 'updateModal' + id;
+        const modal = new bootstrap.Modal('#' + k);
+        modal.show();
+    }
+    function show(id){
+        const k = 'showModal' + id;
+        const modal = new bootstrap.Modal('#' + k);
+        modal.show();
+    }
+    function add(){
+        const k = 'addModal';
+        const modal = new bootstrap.Modal('#' + k);
+        modal.show();
+    }
+
+
+    document.addEventListener('input', function(event) {
+      const target = event.target;
+      if (target.classList.contains('flt') && target.type === 'text') {
+        const value = target.value;
+        const isValid = !isNaN(value) && value.trim() !== '' && (Number.isInteger(parseFloat(value)) || value.includes('.')); // Kiểm tra số thực hoặc số nguyên
+        if (!isValid) {
+          target.classList.add('is-invalid'); // Thêm class CSS cho lỗi
+          target.setCustomValidity('Value must be a real number (integer or decimal).'); // Hiển thị thông báo lỗi
+        } else {
+          target.classList.remove('is-invalid'); // Xóa class CSS lỗi
+          target.setCustomValidity(''); // Xóa thông báo lỗi
+        }
+      }
+    });
+</script>
+
+</body>
+
+</html>

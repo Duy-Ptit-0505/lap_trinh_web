@@ -1,0 +1,87 @@
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Website menu 04</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="css/header/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+<div class="site-loader"></div>
+
+<div class="site-wrap" th:fragment="header">
+
+    <div class="site-mobile-menu">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close mt-3">
+                <span class="icon-close2 js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
+
+    <div class="site-navbar" style="background-color: white; position: fixed; padding-top: 0px;">
+        <div class="container py-1">
+            <div class="row align-items-center">
+<!--                <div class="col-8 col-md-8 col-lg-4">-->
+<!--                    <h1 class="mb-0"><strong>Homeland<span class="text-danger">.</span></strong></h1>-->
+<!--                </div>-->
+                <div class="col-8 col-md-8 col-lg-12">
+                    <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
+                        <div class="container">
+                            <h1 class="mb-0"><strong>Homeland<span class="text-danger">.</span></strong></h1>
+                            <!--                  <div class="social-media order-lg-last">-->
+                            <!--                    <p class="mb-0 d-flex">-->
+                            <!--                      <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a>-->
+                            <!--                      <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-twitter"><i class="sr-only">Twitter</i></span></a>-->
+                            <!--                      <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-instagram"><i class="sr-only">Instagram</i></span></a>-->
+                            <!--                      <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>-->
+                            <!--                    </p>-->
+                            <!--                  </div>-->
+
+                            <div class="collapse navbar-collapse" id="ftco-nav">
+                                <ul class="navbar-nav ml-auto mr-md-3">
+                                    <li class="nav-item active"><a href="/web/home" class="nav-link">Home</a></li>
+                                    <li class="nav-item"><a sec:authorize="hasAuthority('ROLE_CUSTOMER')" href="/web/for-customer" class="nav-link">For Customer</a></li>
+                                    <li class="nav-item"><a sec:authorize="hasAuthority('ROLE_SELLER')" href="#" class="nav-link">For Seller</a></li>
+                                    <li class="nav-item"><a sec:authorize="hasAuthority('ROLE_ADMIN')" href="/admin/home" class="nav-link">For Admin</a></li>
+                                    <li sec:authorize="isAuthenticated()" class="nav-item"><span class="nav-link" th:text="'Xin chào ' + ${#authentication.principal.username}"></span> </li>
+                                    <li class="nav-item">
+                                        <a sec:authorize="isAuthenticated()" href="/web/logout" class="nav-link">
+                                            <span>
+                                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                            </span>
+                                            <span class="hide-menu">Logout</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item"><a sec:authorize="isAnonymous()" href="/web/login" class="nav-link">Log in</a></li>
+                                    <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
+                                    <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+                                    <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/header/jquery.min.js"></script>
+<script src="js/header/popper.js"></script>
+<script src="js/header/bootstrap.min.js"></script>
+<script src="js/header/main.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,277 @@
+
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Modernize Free</title>
+    <link rel="shortcut icon" type="image/png" href="/admin/images/admin/logos/favicon.png" />
+    <link rel="stylesheet" href="/admin/css/styles.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>-->
+
+</head>
+
+<body>
+<!--  Body Wrapper -->
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <div th:replace="/common/admin/menu-left :: menu-left"></div>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+        <!--  Header Start -->
+        <div th:replace="/common/admin/header :: header"></div>
+        <!--  Header End -->
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">Forms-add-building</h5>
+                        <div class="card">
+                            <div class="card-body">
+<!--                                <div id="formAdd" >-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <label  class="form-label">Building-Name</label>-->
+<!--                                        <input id="buildingName" name="buildingName" type="text" class="form-control"  aria-describedby="emailHelp">-->
+<!--                                        &lt;!&ndash;                                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>&ndash;&gt;-->
+<!--                                    </div>-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <label  class="form-label">Address</label>-->
+<!--                                        <input id="address" name="address" type="text" class="form-control" >-->
+<!--                                    </div>-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <label  class="form-label">Area</label>-->
+<!--                                        <input id="area" name="area" type="text" class="form-control" >-->
+<!--                                    </div>-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <label  class="form-label">Bed-Room</label>-->
+<!--                                        <input id="bedRoom" name="bedRoom" type="text" class="form-control" >-->
+<!--                                    </div>-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <label  class="form-label">Bath-Room</label>-->
+<!--                                        <input id="bathRoom" name="bathRoom" type="text" class="form-control" >-->
+<!--                                    </div>-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <label  class="form-label">Price</label>-->
+<!--                                        <input id="price" name="price" type="text" class="form-control" >-->
+<!--                                    </div>-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <label  class="form-label">Offer-Type</label>-->
+<!--                                        <select id="offerType" name="offerType" class="form-select">-->
+<!--                                            <option value="sale" class="form-control">Sale</option>-->
+<!--                                            <option value="rent" class="form-control">Rent</option>-->
+<!--                                            <option value="lease" class="form-control">Lease</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <label  class="form-label">Category</label>-->
+<!--                                        <select id="category" name="category"  class="form-select">-->
+<!--                                            <option value="CON_DO" class="form-control">Condo</option>-->
+<!--                                            <option value="COMMERCIAL BUILDING" class="form-control">Commercial Building</option>-->
+<!--                                            <option value="LAND PROPERTY" class="form-control">Land Property</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <label  class="form-label">Short-Description</label>-->
+<!--                                        <input id="shortDescription" name="shortDescription" type="text" class="form-control" >-->
+<!--                                    </div>-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <label  class="form-label">Description</label>-->
+<!--                                        <input id="description" name="description" type="text" class="form-control" >-->
+<!--                                    </div>-->
+<!--                                    <div class="mb-3">-->
+<!--                                        <label   class="form-label">Image</label>-->
+
+<!--                                        <input class="form-control" name="image" type="file" id="uploadImage"/>-->
+<!--                                    </div>-->
+<!--                                    &lt;!&ndash;                                    <div class="mb-3 form-check">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--                                    <button type="button" id="btn-submit-form-add-building" class="btn btn-primary">Submit</button>-->
+<!--                                </div>-->
+                                <form id="formAdd" th:object="${modelAdd}" th:action="@{/admin/add-building}" method="POST" enctype="multipart/form-data">
+                                    <div class="mb-3">
+                                        <label  class="form-label">Building-Name</label>
+                                        <input th:field="*{id}" type="hidden" id="idBuilding" name="idBuilding" value="${modelAdd.id}" >
+                                        <input id="buildingName"  type="text" class="form-control" th:field="*{buildingName}">
+<!--                                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+                                    </div>
+                                    <div class="mb-3">
+                                        <label  class="form-label">Address</label>
+                                        <input id="address" type="text" class="form-control" th:field="*{address}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label  class="form-label">Area</label>
+                                        <input id="area"  type="text" class="form-control" th:field="*{area}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label  class="form-label">Bed-Room</label>
+                                        <input id="bedRoom"  type="text" class="form-control" th:field="*{bedRoom}" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label  class="form-label">Bath-Room</label>
+                                        <input id="bathRoom" type="text" class="form-control" th:field="*{bathRoom}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label  class="form-label">Price</label>
+                                        <input id="price" th:field="*{price}" type="text" class="form-control" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label  class="form-label">Offer-Type</label>
+                                        <select id="offerType"  class="form-select" th:field="*{offerType}">
+                                            <option value="sale" class="form-control">Sale</option>
+                                            <option value="rent" class="form-control">Rent</option>
+                                            <option value="lease" class="form-control">Lease</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label  class="form-label">Category</label>
+                                        <select id="category"   class="form-select" th:field="*{category}">
+                                            <option value="CON_DO" class="form-control">Condo</option>
+                                            <option value="COMMERCIAL_BUILDING" class="form-control">Commercial Building</option>
+                                            <option value="LAND_PROPERTY" class="form-control">Land Property</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label  class="form-label">Short-Description</label>
+                                        <input id="shortDescription"  type="text" class="form-control" th:field="*{shortDescription}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label  class="form-label">Description</label>
+                                        <input id="description"  type="text" class="form-control" th:field="*{description}" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label   class="form-label">Image</label>
+
+                                        <input class="form-control" name="image" type="file" id="uploadImage" value="${modelEdit.imageName}" th:field="*{image}"/>
+                                    </div>
+<!--                                    <div class="mb-3 form-check">-->
+<!--                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+<!--                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+<!--                                    </div>-->
+                                    <button type="submit" id="btnsubmit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+<!--                        <h5 class="card-title fw-semibold mb-4">Disabled forms</h5>-->
+<!--                        <div class="card mb-0">-->
+<!--                            <div class="card-body">-->
+<!--                                <form>-->
+<!--                                    <fieldset disabled>-->
+<!--                                        <legend>Disabled fieldset example</legend>-->
+<!--                                        <div class="mb-3">-->
+<!--                                            <label for="disabledTextInput" class="form-label">Disabled input</label>-->
+<!--                                            <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">-->
+<!--                                        </div>-->
+<!--                                        <div class="mb-3">-->
+<!--                                            <label for="disabledSelect" class="form-label">Disabled select menu</label>-->
+<!--                                            <select id="disabledSelect" class="form-select">-->
+<!--                                                <option>Disabled select</option>-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+<!--                                        <div class="mb-3">-->
+<!--                                            <div class="form-check">-->
+<!--                                                <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" disabled>-->
+<!--                                                <label class="form-check-label" for="disabledFieldsetCheck">-->
+<!--                                                    Can't check this-->
+<!--                                                </label>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <button type="button" class="btn btn-primary">Submit</button>-->
+<!--                                    </fieldset>-->
+<!--                                </form>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/admin/libs/jquery/dist/jquery.min.js"></script>
+<script src="/admin/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/admin/js/sidebarmenu.js"></script>
+<script src="/admin/js/app.min.js"></script>
+<script src="/admin/libs/apexcharts/dist/apexcharts.min.js"></script>
+<script src="/admin/libs/simplebar/dist/simplebar.js"></script>
+<script src="/admin/js/dashboard.js"></script>
+
+<script>
+<!--    $(document).ready(function() {-->
+<!--        var imageBase64 = '';-->
+<!--        var imageName = '';-->
+<!--        $('#btnsubmit').click(function (event) {-->
+<!--            event.preventDefault(); // Ngăn chặn việc gửi form mặc định-->
+<!--            var token = $('#_csrf').attr('content');-->
+<!--            var header = $('#_csrf_header').attr('content');-->
+<!--            var data = {};-->
+<!--            data['buildingName'] = $('#buildingName').val();-->
+<!--            data['address'] = $('#address').val();-->
+<!--            data['area'] = $('#area').val();-->
+<!--            data['bedRoom'] = $('#bedRoom').val();-->
+<!--            data['bathRoom'] = $('#bathRoom').val();-->
+<!--            data['price'] = $('#price').val();-->
+<!--            data['offerType'] = $('#offerType').val();-->
+<!--            data['category'] = $('#category').val();-->
+<!--            data['shortDescription'] = $('#shortDescription').val();-->
+<!--            data['description'] = $('#description').val();-->
+<!--            if ('' !== imageBase64) {-->
+<!--                    data['imageBase64'] = imageBase64;-->
+<!--                    data['imageName'] = imageName;-->
+<!--                }-->
+<!--            data['image'] = $('#uploadImage').val();-->
+
+<!--            $.ajax({-->
+<!--                type: "POST",-->
+<!--                url: "/admin/add-building",-->
+<!--                data: JSON.stringify(data),-->
+<!--                contentType: "application/json",-->
+<!--                beforeSend: function(xhr) {-->
+<!--                            xhr.setRequestHeader(header, token);-->
+<!--                        },-->
+<!--                success: function (response) {-->
+<!--                        window.location.href = "/web/home";-->
+<!--                },-->
+<!--                error: function (response) {-->
+<!--                    alert("Lỗi: " + response.statusText);-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--        $('#btnHuyThaoTac').click(function (e) {-->
+<!--            e.preventDefault();-->
+<!--            window.location.href = "/admin/building-list";-->
+
+<!--        });-->
+
+<!--        $('#uploadImage').change(function (event) {-->
+<!--            var reader = new FileReader();-->
+<!--            var file = $(this)[0].files[0];-->
+<!--            reader.onload = function(e){-->
+<!--                imageBase64 = e.target.result;-->
+<!--                imageName = file.name; // ten hinh khong dau, khoang cach. vd: a-b-c-->
+<!--            };-->
+<!--            reader.readAsDataURL(file);-->
+<!--            openImage(this, "viewImage");-->
+<!--        });-->
+
+<!--        function openImage(input, imageView) {-->
+<!--            if (input.files && input.files[0]) {-->
+<!--                var reader = new FileReader();-->
+<!--                reader.onload = function (e) {-->
+<!--                    $('#' +imageView).attr('src', reader.result);-->
+<!--                }-->
+<!--                reader.readAsDataURL(input.files[0]);-->
+<!--            }-->
+<!--        }-->
+<!--    });-->
+
+</script>
+</body>
+
+</html>

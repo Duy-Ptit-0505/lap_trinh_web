@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+<form id="test" action="/admin/them" method="POST">
+    <input type="text" name="dmd" id="dmd" value="domanhduy">
+    <input type="number" name="vla" id="vla" value="123">
+    <button type="submit" id="btnsubmit">Submit</button>
+</form>
+
+<script>
+    $(document).ready(function() {
+        $('#btnsubmit').click(function (event) {
+            event.preventDefault(); // Ngăn chặn việc gửi form mặc định
+            var token = $('#_csrf').attr('content');
+            var header = $('#_csrf_header').attr('content');
+            var data = { // Đảm bảo đối tượng data có thuộc tính
+                dmd: $('#dmd').val(),
+                vla: $('#vla').val()
+            };
+
+            $.ajax({
+                type: "POST", // Sử dụng POST để gửi dữ liệu
+                url: "/web/account", // Điều chỉnh URL nếu cần
+                data: JSON.stringify(data), // Gửi dữ liệu trực tiếp mà không cần JSON.stringify()
+                contentType: "application/json", // Cài đặt loại nội dung nếu máy chủ yêu cầu
+                beforeSend: function(xhr) {
+                            xhr.setRequestHeader(header, token);
+                        },
+                success: function (response) {
+                    if (response.success) {
+                        alert("Thành công! Đang chuyển hướng...");
+                        window.location.href = "/admin/them";
+                    } else {
+                        alert("Lỗi: " + response.message);
+                    }
+                },
+                error: function (response) {
+                    alert("Lỗi: " + response.statusText);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
